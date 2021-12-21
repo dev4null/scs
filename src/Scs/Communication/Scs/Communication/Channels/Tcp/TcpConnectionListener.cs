@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Hik.Communication.Scs.Communication.EndPoints.Tcp;
@@ -66,6 +68,9 @@ namespace Hik.Communication.Scs.Communication.Channels.Tcp
         private void StartSocket()
         {
             _listenerSocket = new TcpListener(System.Net.IPAddress.Any, _endPoint.TcpPort);
+            //_listenerSocket.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ExclusiveAddressUse, 0);
+            _listenerSocket.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
+
             _listenerSocket.Start();
         }
 
